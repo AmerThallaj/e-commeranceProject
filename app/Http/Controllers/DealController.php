@@ -28,4 +28,14 @@ class DealController extends Controller
     {
       return Deal::where('buyer_id','=',\auth()->user()->getAuthIdentifier())->get();
     }
+    public function destroy(Request $request)
+    {
+       $deal= Deal::find($request->id);
+       $product=Product::find($deal->product_id);
+       $product->remain++;
+       $product->save();
+       $deal->delete();
+
+
+    }
 }
